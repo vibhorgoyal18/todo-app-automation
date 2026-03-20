@@ -34,34 +34,6 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Checkout app repo and build
-        uses: actions/checkout@v4
-        with:
-          repository: vibhorgoyal18/test-todo-app
-          path: test-todo-app
-
-      - name: Setup Node.js for app
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install app dependencies
-        working-directory: test-todo-app
-        run: npm ci
-
-      - name: Build app
-        working-directory: test-todo-app
-        run: npm run build
-
-      - name: Serve app
-        working-directory: test-todo-app
-        run: npx serve -s dist -l 5175 &
-        env:
-          CI: true
-
-      - name: Wait for app to be ready
-        run: npx wait-on http://localhost:5175 --timeout 30000
-
       # Pull Allure history from gh-pages to preserve trend data
       - name: Get Allure history
         uses: actions/checkout@v4
@@ -87,7 +59,8 @@ jobs:
         run: npx playwright test --project=chromium
         env:
           CI: true
-          BASE_URL: http://localhost:5175/test-todo-app
+          ENV: prod
+          BASE_URL: https://vibhorgoyal18.github.io/test-todo-app/
 
       - name: Generate Allure report
         if: always()
