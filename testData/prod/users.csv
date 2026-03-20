@@ -1,0 +1,3 @@
+key,email,name,role,password
+testuser,alice@test.com,Alice Tester,admin,Test@1234
+viewer,bob@test.com,Bob Viewer,viewer,View@5678
