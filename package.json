@@ -1,0 +1,18 @@
+{
+  "name": "todo-app-automation",
+  "version": "1.0.0",
+  "description": "Playwright BDD automation tests for the Todo App",
+  "scripts": {
+    "test": "bddgen && playwright test",
+    "test:headed": "bddgen && playwright test --headed",
+    "test:ui": "bddgen && playwright test --ui",
+    "test:debug": "bddgen && playwright test --debug",
+    "bddgen": "bddgen",
+    "bddgen:export": "bddgen export"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "playwright-bdd": "^8.2.0",
+    "typescript": "^5.7.0"
+  }
+}
