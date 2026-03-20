@@ -158,6 +158,53 @@ ENV=prod npm test
 
 ---
 
+## Writing New Test Scenarios (Required Workflow)
+
+When asked to write a test for a specific scenario, follow this exact sequence every time:
+
+### Step 1 — Navigate the app first with playwright-mcp
+
+Before writing a single line of Gherkin, use playwright-mcp to explore the relevant part of the app:
+
+1. Navigate to the page or feature under test
+2. Take a snapshot (`mcp_playwright_browser_snapshot`) to inspect the accessibility tree, visible labels, and `data-testid` values
+3. Interact with the relevant UI elements to observe the actual flow and expected outcomes
+4. Confirm which `data-testid` selectors exist on the elements involved
+
+This ensures the scenario accurately reflects what the app actually does, not what is assumed.
+
+### Step 2 — Write the feature file only
+
+After exploring the app:
+
+- Write the `.feature` file in `tests/` with the Gherkin scenario
+- **Do NOT touch any `.ts` step definition files at this stage**
+- Use Gherkin steps that map to **existing step definitions** wherever possible. Check `src/steps/` before inventing new steps.
+
+### Step 3 — Reuse existing steps; never create new ones without permission
+
+- Scan all existing step files under `src/steps/` for matching patterns before writing anything new
+- If an existing step covers the intent (even partially), use it — do not duplicate
+- If a **new** step definition is truly unavoidable, **stop and ask for explicit permission** before creating it. Describe what new step is needed and why no existing step can be reused.
+
+### Step 4 — Implement step definitions only when explicitly instructed
+
+- After delivering the feature file, wait for the user to say "implement the steps" (or equivalent)
+- Only then add new step definitions to the appropriate `src/steps/<area>.steps.ts` file
+- Do not pre-emptively create or modify any TypeScript implementation
+
+### Summary
+
+| Stage | Action | Who decides |
+|---|---|---|
+| Explore app | playwright-mcp navigation + snapshot | Copilot (mandatory) |
+| Write scenario | `.feature` file only | Copilot |
+| Reuse steps | Scan existing steps first | Copilot (mandatory) |
+| New step needed | Ask permission, describe what and why | User approves |
+| Implement steps | Write TypeScript step definitions | Only when user says so |
+
+---
+
 ## Debugging & Investigating Failures
 
 ### REQUIRED: Use playwright-mcp to investigate failures
