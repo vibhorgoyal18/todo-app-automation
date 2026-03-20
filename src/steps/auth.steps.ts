@@ -1,44 +1,52 @@
 import { expect } from '@playwright/test';
-import { Given, When, Then, Before } from '../fixtures/index';
-
-Before(async ({ page }) => {
-  // Optional: reset state before each scenario
-});
+import { Given, When, Then } from '../fixtures/index';
 
 Given('I am on the login page', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveURL(/login/);
+  await expect(page).toHaveURL(/#\/login/);
 });
 
-Given('I am logged in as {string} with password {string}', async ({ page }, username: string, password: string) => {
+Given('I am logged in', async ({ page }) => {
   await page.goto('/');
-  await page.getByLabel(/username/i).fill(username);
-  await page.getByLabel(/password/i).fill(password);
-  await page.getByRole('button', { name: /login/i }).click();
-  await expect(page).not.toHaveURL(/login/);
+  await page.getByTestId('login-username-input').fill('testuser');
+  await page.getByTestId('login-password-input').fill('Test@1234');
+  await page.getByTestId('login-submit-btn').click();
+  await expect(page).toHaveURL(/#\/dashboard/);
 });
 
 When('I enter username {string} and password {string}', async ({ page }, username: string, password: string) => {
-  await page.getByLabel(/username/i).fill(username);
-  await page.getByLabel(/password/i).fill(password);
+  await page.getByTestId('login-username-input').fill(username);
+  await page.getByTestId('login-password-input').fill(password);
 });
 
-When('I click the login button', async ({ page }) => {
-  await page.getByRole('button', { name: /login/i }).click();
+When('I click the Sign In button', async ({ page }) => {
+  await page.getByTestId('login-submit-btn').click();
 });
 
-When('I click the logout button', async ({ page }) => {
-  await page.getByRole('button', { name: /logout/i }).click();
+When('I toggle the password visibility', async ({ page }) => {
+  await page.getByTestId('toggle-password').click();
+});
+
+When('I click the Logout button', async ({ page }) => {
+  await page.getByTestId('logout-btn').click();
 });
 
 Then('I should be redirected to the dashboard', async ({ page }) => {
-  await expect(page).toHaveURL(/dashboard/);
+  await expect(page).toHaveURL(/#\/dashboard/);
+});
+
+Then('I should see the username {string} in the header', async ({ page }, name: string) => {
+  await expect(page.getByTestId('header-username')).toHaveText(name);
+});
+
+Then('I should see an error {string}', async ({ page }, message: string) => {
+  await expect(page.getByTestId('login-error-message')).toHaveText(message);
 });
 
 Then('I should be redirected to the login page', async ({ page }) => {
-  await expect(page).toHaveURL(/login/);
+  await expect(page).toHaveURL(/#\/login/);
 });
 
-Then('I should see an error message', async ({ page }) => {
-  await expect(page.getByRole('alert')).toBeVisible();
+Then('the password field should show the password as plain text', async ({ page }) => {
+  await expect(page.getByTestId('login-password-input')).toHaveAttribute('type', 'text');
 });
