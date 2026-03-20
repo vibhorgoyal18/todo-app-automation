@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Playwright BDD automation tests for the Todo App",
   "scripts": {
-    "test": "bddgen && playwright test",
-    "test:headed": "bddgen && playwright test --headed",
+    "test": "rm -rf allure-results && bddgen && playwright test",
+    "test:headed": "rm -rf allure-results && bddgen && playwright test --headed",
     "test:ui": "bddgen && playwright test --ui",
     "test:debug": "bddgen && playwright test --debug",
     "bddgen": "bddgen",
