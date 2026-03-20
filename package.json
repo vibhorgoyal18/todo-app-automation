@@ -8,11 +8,14 @@
     "test:ui": "bddgen && playwright test --ui",
     "test:debug": "bddgen && playwright test --debug",
     "bddgen": "bddgen",
-    "bddgen:export": "bddgen export"
+    "bddgen:export": "bddgen export",
+    "allure:open": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+    "allure:open:history": "cp -r allure-report/history allure-results/history 2>/dev/null || true && allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",
     "@types/node": "^25.5.0",
+    "allure-commandline": "^2.34.0",
     "allure-playwright": "^3.1.3",
     "playwright-bdd": "^8.2.0",
     "typescript": "^5.7.0"
