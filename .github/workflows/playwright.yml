@@ -34,24 +34,6 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      # Pull Allure history from gh-pages to preserve trend data
-      - name: Get Allure history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Copy Allure history into results
-        if: always()
-        continue-on-error: true
-        run: |
-          if [ -d "gh-pages/allure-report/history" ]; then
-            mkdir -p allure-results/history
-            cp -r gh-pages/allure-report/history/. allure-results/history/
-          fi
-
       - name: Generate BDD test files
         run: npx bddgen
 
@@ -62,16 +44,12 @@ jobs:
           ENV: prod
           BASE_URL: https://vibhorgoyal18.github.io/test-todo-app/
 
-      - name: Generate Allure report
-        if: always()
-        run: npx allure generate allure-results --clean -o allure-report
-
-      - name: Upload Allure report artifact
+      - name: Upload allure-results artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          name: allure-results
+          path: allure-results
           retention-days: 30
 
       - name: Upload Playwright report artifact
@@ -82,9 +60,57 @@ jobs:
           path: playwright-report
           retention-days: 30
 
-      # Deploy Allure report to GitHub Pages
-      - name: Deploy to GitHub Pages
-        if: always() && github.ref == 'refs/heads/main'
+  publish-allure:
+    name: Publish Allure Report to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test
+    if: always() && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout automation repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline --save-dev
+
+      - name: Download allure-results artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      # Pull previous Allure history from gh-pages to preserve trend data
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy Allure history into results
+        continue-on-error: true
+        run: |
+          if [ -d "gh-pages/allure-report/history" ]; then
+            mkdir -p allure-results/history
+            cp -r gh-pages/allure-report/history/. allure-results/history/
+          fi
+
+      - name: Generate Allure report
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          retention-days: 30
+
+      - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
