@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
+import { getConfig } from './src/utils/configReader';
+
+const envConfig = getConfig();
 
 const testDir = defineBddConfig({
   features: 'tests/**/*.feature',
@@ -18,7 +21,7 @@ export default defineConfig({
     ['allure-playwright', { resultsDir: 'allure-results' }],
   ],
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:5175/test-todo-app',
+    baseURL: process.env.BASE_URL || envConfig.base_url,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

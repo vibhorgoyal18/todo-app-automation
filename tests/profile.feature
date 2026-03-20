@@ -5,7 +5,7 @@ Feature: Profile Management
   So that I can update my personal information
 
   Background:
-    Given I am logged in
+    Given I am logged in as "testuser"
     And I navigate to the Profile page
 
   Scenario: Update profile name

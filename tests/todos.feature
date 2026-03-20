@@ -5,7 +5,7 @@ Feature: Todo Management
   So that I can keep track of my tasks
 
   Background:
-    Given I am logged in
+    Given I am logged in as "testuser"
     And I navigate to the Todos page
 
   Scenario: Add a new todo

@@ -5,7 +5,7 @@ Feature: Dashboard
   So that I can get an overview of my todos
 
   Background:
-    Given I am logged in
+    Given I am logged in as "testuser"
     And I navigate to the Dashboard page
 
   Scenario: Dashboard shows correct stats

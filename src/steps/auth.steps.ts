@@ -1,22 +1,31 @@
 import { expect } from '@playwright/test';
 import { Given, When, Then } from '../fixtures/index';
+import { getUserByKey } from '../utils/userData';
 
 Given('I am on the login page', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveURL(/#\/login/);
 });
 
-Given('I am logged in', async ({ page }) => {
+Given('I am logged in as {string}', async ({ page }, userKey: string) => {
+  const user = getUserByKey(userKey);
   await page.goto('/');
-  await page.getByTestId('login-username-input').fill('testuser');
-  await page.getByTestId('login-password-input').fill('Test@1234');
+  await page.getByTestId('login-username-input').fill(user.key);
+  await page.getByTestId('login-password-input').fill(user.password);
   await page.getByTestId('login-submit-btn').click();
   await expect(page).toHaveURL(/#\/dashboard/);
 });
 
-When('I enter username {string} and password {string}', async ({ page }, username: string, password: string) => {
-  await page.getByTestId('login-username-input').fill(username);
-  await page.getByTestId('login-password-input').fill(password);
+When('I enter credentials for user {string}', async ({ page }, userKey: string) => {
+  const user = getUserByKey(userKey);
+  await page.getByTestId('login-username-input').fill(user.key);
+  await page.getByTestId('login-password-input').fill(user.password);
+});
+
+When('I enter credentials for user {string} with wrong password {string}', async ({ page }, userKey: string, wrongPassword: string) => {
+  const user = getUserByKey(userKey);
+  await page.getByTestId('login-username-input').fill(user.key);
+  await page.getByTestId('login-password-input').fill(wrongPassword);
 });
 
 When('I click the Sign In button', async ({ page }) => {
