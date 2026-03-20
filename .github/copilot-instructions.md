@@ -29,7 +29,7 @@ The project follows a **BDD layer pattern** with clear separation between test i
 1. **BDD execution flow**: `.feature` → `bddgen` → `.features-gen/*.spec.js` → `playwright test`. Always run `bddgen` before `playwright test`.
 2. **No hardcoded credentials**: Feature files reference users by a logical key (e.g. `"testuser"`). Step definitions resolve the actual username and password from the environment's users file at runtime.
 3. **Environment switching**: `ENV=prod` switches all data and config to the prod folder. Defaults to `local`.
-4. **Selectors**: Always use `data-testid` attributes via `page.getByTestId(...)`. Never use CSS classes, XPath, or positional selectors.
+4. **Selectors**: Prefer `data-testid` attributes via `page.getByTestId(...)` when available. Fall back to semantic locators (`getByRole`, `getByLabel`, `getByText`) when `data-testid` is absent. Avoid CSS classes, XPath, and positional selectors unless there is no other option.
 5. **Reporters**: Three reporters run in parallel — console list, Playwright HTML report, and Allure.
 
 ---
@@ -77,7 +77,7 @@ const myValue = config.my_key;
 - Create one `src/steps/<feature>.steps.ts` file per feature area
 - Always import `Given`, `When`, `Then` from `../fixtures/index`
 - Always import `getUserByKey` from `../utils/userData` when a step needs user credentials
-- Use `page.getByTestId(...)` exclusively — see the full list of available `data-testid` values below
+- Prefer `page.getByTestId(...)` when a `data-testid` exists (see the full list below). Otherwise use semantic locators: `getByRole`, `getByLabel`, `getByText`. Avoid CSS classes, XPath, and positional selectors.
 - New step definitions for a new feature must also have a matching `.feature` file
 
 ### Available `data-testid` selectors (from the app source)
