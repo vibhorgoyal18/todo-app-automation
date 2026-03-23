@@ -40,10 +40,6 @@ When('I click the Logout button', async ({ page }) => {
   await page.getByTestId('logout-btn').click();
 });
 
-Then('I should be redirected to the dashboard', async ({ page }) => {
-  await expect(page).toHaveURL(/#\/dashboard/);
-});
-
 Then('I should see the username {string} in the header', async ({ page }, name: string) => {
   await expect(page.getByTestId('header-username')).toHaveText(name);
 });

@@ -10,6 +10,10 @@ When('I click the Quick Add button', async ({ page }) => {
   await page.getByTestId('quick-add-btn').click();
 });
 
+Then('I should be redirected to the dashboard', async ({ page }) => {
+  await expect(page).toHaveURL(/#\/dashboard/);
+});
+
 Then('I should see the stat card {string} with value {string}', async ({ page }, label: string, value: string) => {
   const card = page.locator('p', { hasText: label }).locator('..');
   await expect(card.locator('p').first()).toHaveText(value);
