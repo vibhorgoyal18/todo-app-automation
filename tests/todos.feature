@@ -1,12 +1,11 @@
-@todos
+@todos @auth:required
 Feature: Todo Management
   As a logged-in user
   I want to manage my todos
   So that I can keep track of my tasks
 
   Background:
-    Given I am logged in as "testuser"
-    And I navigate to the Todos page
+    Given I navigate to the Todos page
 
   Scenario: Add a new todo
     When I click the Add Todo button

@@ -6,7 +6,7 @@ const envConfig = getConfig();
 
 const testDir = defineBddConfig({
   features: 'tests/**/*.feature',
-  steps: ['src/steps/**/*.ts', 'src/fixtures/index.ts'],
+  steps: ['src/steps/**/*.ts', 'src/hooks/**/*.ts', 'src/fixtures/index.ts'],
 });
 
 export default defineConfig({

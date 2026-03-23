@@ -1,12 +1,11 @@
-@profile
+@profile @auth:required
 Feature: Profile Management
   As a logged-in user
   I want to manage my profile
   So that I can update my personal information
 
   Background:
-    Given I am logged in as "testuser"
-    And I navigate to the Profile page
+    Given I navigate to the Profile page
 
   Scenario: Update profile name
     When I update the name field to "Alice Updated"

@@ -1,12 +1,11 @@
-@dashboard
+@dashboard @auth:required
 Feature: Dashboard
   As a logged-in user
   I want to view my dashboard
   So that I can get an overview of my todos
 
   Background:
-    Given I am logged in as "testuser"
-    And I navigate to the Dashboard page
+    Given I navigate to the Dashboard page
 
   Scenario: Dashboard shows correct stats
     Then I should see the stat card "Total Todos" with value "3"
