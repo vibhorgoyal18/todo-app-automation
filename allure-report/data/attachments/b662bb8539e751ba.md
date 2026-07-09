@@ -1,0 +1,62 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e6]: TodoApp
+      - navigation [ref=e7]:
+        - link "Dashboard" [ref=e8] [cursor=pointer]:
+          - /url: "#/dashboard"
+          - img [ref=e9]
+          - text: Dashboard
+        - link "Todos" [ref=e14] [cursor=pointer]:
+          - /url: "#/todos"
+          - img [ref=e15]
+          - text: Todos
+        - link "Profile" [ref=e18] [cursor=pointer]:
+          - /url: "#/profile"
+          - img [ref=e19]
+          - text: Profile
+      - button "Logout" [ref=e23]:
+        - img [ref=e24]
+        - text: Logout
+    - generic [ref=e27]:
+      - banner [ref=e28]:
+        - generic [ref=e29]:
+          - button "Open command palette" [ref=e30]:
+            - generic [ref=e31]: Search...
+            - generic [ref=e32]: ⌘K
+          - generic [ref=e33]: Alice Tester
+      - main [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]:
+              - heading "Dashboard" [level=1] [ref=e38]
+              - paragraph [ref=e39]: Welcome back, Alice Tester
+            - button "Quick Add" [ref=e40]:
+              - img [ref=e41]
+              - text: Quick Add
+          - generic [ref=e42]:
+            - generic [ref=e44]:
+              - img [ref=e46]
+              - generic [ref=e49]:
+                - paragraph [ref=e50]: "3"
+                - paragraph [ref=e51]: Total Todos
+            - generic [ref=e53]:
+              - img [ref=e55]
+              - generic [ref=e58]:
+                - paragraph [ref=e59]: "1"
+                - paragraph [ref=e60]: Completed
+            - generic [ref=e62]:
+              - img [ref=e64]
+              - generic [ref=e67]:
+                - paragraph [ref=e68]: "1"
+                - paragraph [ref=e69]: In Progress
+            - generic [ref=e71]:
+              - img [ref=e73]
+              - generic [ref=e75]:
+                - paragraph [ref=e76]: "2"
+                - paragraph [ref=e77]: Overdue
+  - region "Notifications alt+T"
+```
