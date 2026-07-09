@@ -58,3 +58,14 @@ Feature: Todo Management
     And I fill in the todo title "Temporary todo"
     And I cancel the todo form
     Then I should not see "Temporary todo" in the todo list
+
+  Scenario: Add a todo and then delete it
+    When I click the Add Todo button
+    And I fill in the todo title "Test Todo."
+    And I submit the todo form
+    Then I should see a todo item "Test Todo." in the list
+    # Register the confirm-dialog handler before clicking delete, since the app
+    # fires a synchronous window.confirm() on the delete click.
+    When I confirm the delete dialog
+    And I click delete on the todo "Test Todo."
+    Then I should not see "Test Todo." in the todo list
