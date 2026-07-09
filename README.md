@@ -252,3 +252,4 @@ Each pipeline run uploads two artifacts (retained for 30 days):
 - `playwright-report` — Playwright's built-in HTML report
 
 These can be downloaded from the **Actions** tab of any workflow run.
+#
