@@ -1,0 +1,123 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e6]: TodoApp
+      - navigation [ref=e7]:
+        - link "Dashboard" [ref=e8] [cursor=pointer]:
+          - /url: "#/dashboard"
+          - img [ref=e9]
+          - text: Dashboard
+        - link "Todos" [ref=e14] [cursor=pointer]:
+          - /url: "#/todos"
+          - img [ref=e15]
+          - text: Todos
+        - link "Profile" [ref=e18] [cursor=pointer]:
+          - /url: "#/profile"
+          - img [ref=e19]
+          - text: Profile
+      - button "Logout" [ref=e23]:
+        - img [ref=e24]
+        - text: Logout
+    - generic [ref=e27]:
+      - banner [ref=e28]:
+        - generic [ref=e29]:
+          - button "Open command palette" [ref=e30]:
+            - generic [ref=e31]: Search...
+            - generic [ref=e32]: ⌘K
+          - generic [ref=e33]: Alice Tester
+      - main [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - heading "Todos" [level=1] [ref=e37]
+            - button "Add Todo" [ref=e38]:
+              - img [ref=e39]
+              - text: Add Todo
+          - generic [ref=e40]:
+            - textbox "Search todos" [ref=e42]:
+              - /placeholder: Search todos…
+            - generic [ref=e44]:
+              - combobox "Filter by status" [ref=e45]:
+                - option "All Statuses" [selected]
+                - option "Todo"
+                - option "In Progress"
+                - option "Done"
+              - img
+            - generic [ref=e47]:
+              - combobox "Filter by priority" [ref=e48]:
+                - option "All Priorities" [selected]
+                - option "High"
+                - option "Medium"
+                - option "Low"
+              - img
+            - generic [ref=e50]:
+              - combobox "Sort todos" [ref=e51]:
+                - option "Due Date" [selected]
+                - option "Priority"
+                - option "Title"
+              - img
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - button "Drag to reorder" [ref=e54]:
+                - img [ref=e55]
+              - checkbox "Mark \"Review PR\" as incomplete" [checked] [ref=e62]:
+                - img [ref=e63]
+              - generic [ref=e65]:
+                - generic [ref=e66]:
+                  - generic [ref=e67]: Review PR
+                  - generic [ref=e68]:
+                    - generic [ref=e69]: low
+                    - generic [ref=e70]: done
+                - paragraph [ref=e71]: Code review for feature branch
+                - generic [ref=e72]:
+                  - generic [ref=e73]: 📅 Feb 20, 2025
+                  - generic [ref=e74]: review
+              - generic [ref=e75]:
+                - button "Edit \"Review PR\"" [ref=e76]:
+                  - img [ref=e77]
+                - button "Delete \"Review PR\"" [ref=e80]:
+                  - img [ref=e81]
+            - generic [ref=e84]:
+              - button "Drag to reorder" [ref=e85]:
+                - img [ref=e86]
+              - checkbox "Mark \"Write Playwright tests\" as done" [ref=e93]
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - generic [ref=e96]: Write Playwright tests
+                  - generic [ref=e97]:
+                    - generic [ref=e98]: high
+                    - generic [ref=e99]: in-progress
+                - paragraph [ref=e100]: Cover login, CRUD, and drag-drop scenarios
+                - generic [ref=e101]:
+                  - generic [ref=e102]: 📅 Mar 1, 2025
+                  - generic [ref=e103]: testing
+                  - generic [ref=e104]: automation
+              - generic [ref=e105]:
+                - button "Edit \"Write Playwright tests\"" [ref=e106]:
+                  - img [ref=e107]
+                - button "Delete \"Write Playwright tests\"" [ref=e110]:
+                  - img [ref=e111]
+            - generic [ref=e114]:
+              - button "Drag to reorder" [ref=e115]:
+                - img [ref=e116]
+              - checkbox "Mark \"Set up CI pipeline\" as done" [ref=e123]
+              - generic [ref=e124]:
+                - generic [ref=e125]:
+                  - generic [ref=e126]: Set up CI pipeline
+                  - generic [ref=e127]:
+                    - generic [ref=e128]: medium
+                    - generic [ref=e129]: todo
+                - paragraph [ref=e130]: GitHub Actions with Playwright
+                - generic [ref=e131]:
+                  - generic [ref=e132]: 📅 Mar 15, 2025
+                  - generic [ref=e133]: devops
+              - generic [ref=e134]:
+                - button "Edit \"Set up CI pipeline\"" [ref=e135]:
+                  - img [ref=e136]
+                - button "Delete \"Set up CI pipeline\"" [active] [ref=e139]:
+                  - img [ref=e140]
+          - status [ref=e143]
+  - region "Notifications alt+T"
+```
