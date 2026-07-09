@@ -60,6 +60,14 @@ jobs:
           path: playwright-report
           retention-days: 30
 
+      - name: Upload test results artifact (screenshots, videos, traces, JUnit XML)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results
+          retention-days: 30
+
   publish-allure:
     name: Publish Allure Report to GitHub Pages
     runs-on: ubuntu-latest
