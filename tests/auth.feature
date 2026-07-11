@@ -27,3 +27,28 @@ Feature: Authentication
     Given I am logged in as "testuser"
     When I click the Logout button
     Then I should be redirected to the login page
+
+  Scenario: Login fails when username is empty
+    Given I am on the login page
+    When I click the Sign In button
+    Then I should see a field validation error "Username is required"
+
+  Scenario: Login fails when password is empty
+    Given I am on the login page
+    When I enter only the username for user "testuser"
+    And I click the Sign In button
+    Then I should see a field validation error "Password is required"
+
+  Scenario: Login fails with unknown username
+    Given I am on the login page
+    When I enter username "unknownuser" and password "somepassword"
+    And I click the Sign In button
+    Then I should see an error "Invalid username or password"
+
+  # Intentionally failing — app shows "Alice Tester", not "Alice"
+  @failing
+  Scenario: Header shows user first name only after login
+    Given I am on the login page
+    When I enter credentials for user "testuser"
+    And I click the Sign In button
+    Then the header should display "Alice"

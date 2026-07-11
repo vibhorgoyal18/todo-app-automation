@@ -11,6 +11,7 @@ const testDir = defineBddConfig({
 
 export default defineConfig({
   testDir,
+  globalSetup: './src/globalSetup.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
@@ -23,7 +24,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: process.env.BASE_URL || envConfig.base_url,
-    trace: 'on-first-retry',
+    trace: 'on',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },

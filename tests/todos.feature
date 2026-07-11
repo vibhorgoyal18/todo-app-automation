@@ -31,7 +31,6 @@ Feature: Todo Management
 
   Scenario: Delete a todo
     When I click delete on the todo "Set up CI pipeline"
-    And I confirm the delete dialog
     Then I should not see "Set up CI pipeline" in the todo list
 
   Scenario: Mark a todo as done
@@ -69,3 +68,46 @@ Feature: Todo Management
     When I confirm the delete dialog
     And I click delete on the todo "Test Todo."
     Then I should not see "Test Todo." in the todo list
+
+  Scenario: Submit todo form with empty title shows validation error
+    When I click the Add Todo button
+    And I submit the todo form
+    Then the add todo dialog should still be visible
+    And I should see a todo form validation error "Title is required"
+
+  Scenario: Edit a todo and save with empty title shows validation error
+    When I click edit on the todo "Set up CI pipeline"
+    And I clear the todo title
+    And I save the todo changes
+    Then the add todo dialog should still be visible
+    And I should see a todo form validation error "Title is required"
+
+  Scenario: Search with no matching results shows empty state
+    When I search for "xyznonexistentquery"
+    Then I should see the empty state
+
+  # Intentionally failing — app shows "Todo added", not "Task created successfully!"
+  @failing
+  Scenario: Adding a todo shows a success confirmation toast
+    When I click the Add Todo button
+    And I fill in the todo title "Demo failing todo"
+    And I submit the todo form
+    Then I should see a success toast "Task created successfully!"
+
+  # Intentionally failing — "Set up CI pipeline" is medium priority, not visible under High filter
+  @failing
+  Scenario: Filter by High priority shows all items
+    When I filter todos by priority "High"
+    Then I should see a todo item "Set up CI pipeline" in the list
+
+  # ScenarioWorld state-passing demo.
+  # The When step captures the dynamic todo ID into scenarioWorld — a per-scenario
+  # fixture — so the Then step can reference it without re-querying the DOM.
+  # This is playwright-bdd's equivalent of Cucumber's World object.
+  Scenario: Captured todo ID is passed between steps via ScenarioWorld
+    When I click the Add Todo button
+    And I fill in the todo title "ScenarioWorld demo todo"
+    And I submit the todo form
+    And I capture the ID of the newly added todo "ScenarioWorld demo todo"
+    Then the captured todo should appear in the list as unchecked
+

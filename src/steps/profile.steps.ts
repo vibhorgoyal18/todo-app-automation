@@ -32,13 +32,19 @@ When('I click Change Password', async ({ page }) => {
 });
 
 Then('I should see a success notification', async ({ page }) => {
-  await expect(page.locator('[data-sonner-toast]')).toBeVisible({ timeout: 5000 });
+  await expect.soft(page.locator('[data-sonner-toast]')).toBeVisible({ timeout: 5000 });
 });
 
 Then('I should see a password success message', async ({ page }) => {
-  await expect(page.getByTestId('password-success-msg')).toBeVisible();
+  await expect.soft(page.getByTestId('password-success-msg')).toBeVisible();
 });
 
 Then('I should see a password error message', async ({ page }) => {
-  await expect(page.getByTestId('password-error-msg')).toBeVisible();
+  await expect.soft(page.getByTestId('password-error-msg')).toBeVisible();
+});
+
+Then('I should see the password error {string}', async ({ page }, message: string) => {
+  const errorEl = page.getByTestId('password-error-msg');
+  await expect(errorEl).toBeVisible();
+  await expect.soft(errorEl).toHaveText(message);
 });

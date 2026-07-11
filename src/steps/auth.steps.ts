@@ -41,11 +41,11 @@ When('I click the Logout button', async ({ page }) => {
 });
 
 Then('I should see the username {string} in the header', async ({ page }, name: string) => {
-  await expect(page.getByTestId('header-username')).toHaveText(name);
+  await expect.soft(page.getByTestId('header-username')).toHaveText(name);
 });
 
 Then('I should see an error {string}', async ({ page }, message: string) => {
-  await expect(page.getByTestId('login-error-message')).toHaveText(message);
+  await expect.soft(page.getByTestId('login-error-message')).toHaveText(message);
 });
 
 Then('I should be redirected to the login page', async ({ page }) => {
@@ -53,5 +53,24 @@ Then('I should be redirected to the login page', async ({ page }) => {
 });
 
 Then('the password field should show the password as plain text', async ({ page }) => {
-  await expect(page.getByTestId('login-password-input')).toHaveAttribute('type', 'text');
+  await expect.soft(page.getByTestId('login-password-input')).toHaveAttribute('type', 'text');
+});
+
+When('I enter only the username for user {string}', async ({ page }, userKey: string) => {
+  const user = getUserByKey(userKey);
+  await page.getByTestId('login-username-input').fill(user.key);
+});
+
+When('I enter username {string} and password {string}', async ({ page }, username: string, password: string) => {
+  await page.getByTestId('login-username-input').fill(username);
+  await page.getByTestId('login-password-input').fill(password);
+});
+
+Then('I should see a field validation error {string}', async ({ page }, message: string) => {
+  await expect.soft(page.getByRole('alert').filter({ hasText: message })).toBeVisible();
+});
+
+// Used by @failing scenarios — hard assertion with intentionally wrong value
+Then('the header should display {string}', async ({ page }, name: string) => {
+  await expect(page.getByTestId('header-username')).toHaveText(name);
 });

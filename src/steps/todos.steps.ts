@@ -57,11 +57,13 @@ When('I save the todo changes', async ({ page }) => {
 When('I click delete on the todo {string}', async ({ page }, title: string) => {
   const todoItem = page.locator(`[data-testid^="todo-item-"]`).filter({ hasText: title });
   const todoId = await todoItem.getAttribute('data-testid').then(id => id?.replace('todo-item-', ''));
+  page.once('dialog', dialog => dialog.accept());
   await page.getByTestId(`todo-delete-${todoId}`).click();
 });
 
 When('I confirm the delete dialog', async ({ page }) => {
-  page.once('dialog', dialog => dialog.accept());
+  // Dialog is already handled within 'I click delete on the todo' step.
+  // This step is kept for compatibility but is a no-op.
 });
 
 When('I check the checkbox for todo {string}', async ({ page }, title: string) => {
@@ -94,4 +96,39 @@ Then('the todo {string} should be marked as done', async ({ page }, title: strin
   const todoItem = page.locator(`[data-testid^="todo-item-"]`).filter({ hasText: title });
   const todoId = await todoItem.getAttribute('data-testid').then(id => id?.replace('todo-item-', ''));
   await expect(page.getByTestId(`todo-checkbox-${todoId}`)).toBeChecked();
+});
+
+When('I clear the todo title', async ({ page }) => {
+  await page.getByTestId('todo-title-input').clear();
+});
+
+Then('the add todo dialog should still be visible', async ({ page }) => {
+  await expect(page.getByTestId('add-todo-dialog')).toBeVisible();
+});
+
+Then('I should see a todo form validation error {string}', async ({ page }, message: string) => {
+  await expect.soft(page.getByRole('alert').filter({ hasText: message })).toBeVisible();
+});
+
+Then('I should see the empty state', async ({ page }) => {
+  await expect(page.getByTestId('empty-state')).toBeVisible();
+});
+
+// Used by @failing scenarios — hard assertion checking for a toast message that doesn't match
+Then('I should see a success toast {string}', async ({ page }, message: string) => {
+  await expect(page.locator('[data-sonner-toast]').filter({ hasText: message })).toBeVisible({ timeout: 5000 });
+});
+
+// ─── ScenarioContext state-passing demo ──────────────────────────────────────
+// These two steps show how state is safely carried across step boundaries using
+// scenarioContext instead of a module-level variable.
+
+When('I capture the ID of the newly added todo {string}', async ({ page, scenarioContext }, title: string) => {
+  const todoItem = page.locator(`[data-testid^="todo-item-"]`).filter({ hasText: title });
+  const testId = await todoItem.getAttribute('data-testid');
+  scenarioContext.lastCreatedTodoId = testId?.replace('todo-item-', '') ?? null;
+});
+
+Then('the captured todo should appear in the list as unchecked', async ({ page, scenarioContext }) => {
+  await expect(page.getByTestId(`todo-checkbox-${scenarioContext.lastCreatedTodoId}`)).not.toBeChecked();
 });
