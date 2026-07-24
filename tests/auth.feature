@@ -51,4 +51,4 @@ Feature: Authentication
     Given I am on the login page
     When I enter credentials for user "testuser"
     And I click the Sign In button
-    Then the header should display "Alice"
+    Then the header should display "Alice Tester"
