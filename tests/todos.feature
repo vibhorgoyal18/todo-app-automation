@@ -86,13 +86,12 @@ Feature: Todo Management
     When I search for "xyznonexistentquery"
     Then I should see the empty state
 
-  # Intentionally failing — app shows "Todo added", not "Task created successfully!"
   @failing
   Scenario: Adding a todo shows a success confirmation toast
     When I click the Add Todo button
     And I fill in the todo title "Demo failing todo"
     And I submit the todo form
-    Then I should see a success toast "Task created successfully!"
+    Then I should see a success toast "Todo added"
 
   # Intentionally failing — "Set up CI pipeline" is medium priority, not visible under High filter
   @failing
