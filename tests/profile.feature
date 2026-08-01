@@ -49,4 +49,4 @@ Feature: Profile Management
   Scenario: Saving profile shows a specific success message
     When I update the name field to "Alice Tester"
     And I click Save Profile
-    Then I should see a success toast "Changes saved!"
+    Then I should see a success toast "Profile updated"
