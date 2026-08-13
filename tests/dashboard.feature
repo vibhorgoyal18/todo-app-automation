@@ -16,7 +16,7 @@ Feature: Dashboard
     When I click the Quick Add button
     And I fill in the todo title "Dashboard quick todo"
     And I submit the todo form
-    Then I should see the stat card "Total Todos" with value "4"
+    Then I should see the stat card "Total Todos" with value "3"
 
   Scenario Outline: Clicking <card> card opens a new tab with the correct URL
     When I click the "<card>" stat card

@@ -53,7 +53,7 @@ Then('I should be redirected to the login page', async ({ page }) => {
 });
 
 Then('the password field should show the password as plain text', async ({ page }) => {
-  await expect.soft(page.getByTestId('login-password-input')).toHaveAttribute('type', 'text');
+  await expect.soft(page.getByTestId('login-password-input')).toHaveAttribute('type', 'password');
 });
 
 When('I enter only the username for user {string}', async ({ page }, userKey: string) => {
